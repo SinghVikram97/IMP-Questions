@@ -1,3 +1,5 @@
+https://www.geeksforgeeks.org/maximum-sum-path-across-two-arrays/
+
 long maxPathSum(int ar1[], int ar2[], int m, int n)
 {
 
