@@ -1,58 +1,35 @@
 Largest Unique Substring
+https://leetcode.com/submissions/detail/162924558/
 
 Given a string S,
 find the largest substring with no repetition i.e.largest substring which contain all unique characters.
 
 // input - given string
 // output - output string that contains largest unique substring
-#include<bits/stdc++.h>
-using namespace std;
-void findLargestUniqueSubstring(char input[], char output[]){
-
-    string s(input);
-    int n=s.length();
-    
-    int i=0;
-    int j=1;
-    
-    unordered_set<char> mySet;
-    mySet.insert(s[0]);
-    int maxLength=-1;
-    int length=1;
-    int st;
-    int end;
-    int maxSt;
-    int maxEnd;
-    st=0;
-    end=0;
-    
-    while(i<=j && j<n){
-        
-        if(mySet.find(s[j])!=mySet.end()){
-            // Cut our window from length
-            auto it=mySet.find(s[j]);
-            mySet.erase(it);
-            i++;
-            length--;
-            st++;
-        }
-        else{
-            // Increase our window
-            mySet.insert(s[j]);
-            j++;
-            length++;
-            end++;
-            if(length>maxLength){
-                maxLength=length;
-                maxSt=st;
-                maxEnd=end;
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n=s.length();
+        unordered_set<char> st;
+        /// Windows from [start,end) i=start and j=end
+        int i=0,j=0; /// Intially window from [0,0) so no element included 
+        int maxCount=0;
+        while(i<n && j<n){
+            // If element doesn't exist in current substring
+            if(st.find(s[j])==st.end()){
+                // Move window to the right ie. include j in window
+                st.insert(s[j]);
+                j++;
+                maxCount=max(maxCount,j-i);  // Current window is [i,j)
+            }
+            else{
+                // Remove that element from map
+                st.erase(s[i]);
+                // Increase the start
+                i++;
+                // Now we can add s[j] as it's duplicate has been removed
             }
         }
+        return maxCount;
     }
-    string ans="";
-    for(int i=maxSt;i<=maxEnd;i++){
-        ans=ans+s[i];
-    }
-
-    strcpy(output,ans.c_str());
-}
+};
