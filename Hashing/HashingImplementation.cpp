@@ -43,6 +43,45 @@ class OurMap{
 
         }
 
+        void rehash(){
+
+            vector<MapNode> temp=buckets;
+
+            buckets=vector<MapNode> (2*numBuckets);
+
+
+            for(int i=0;i<buckets.size();i++){
+                buckets[i]=NULL;
+            }
+
+            int oldBucketCount=numBuckets;
+
+            numBuckets=numBuckets*2;
+
+            totalSize=0;
+
+            for(int i=0;i<oldBucketCount;i++){
+
+                MapNode *head=temp[i];
+
+                while(head!=NULL){
+
+                    insertKeyVal(head->key,head->value);
+
+                    head=head->next;
+
+                }
+            }
+
+            /// Delete temp array
+            for(int i=0;i<oldBucketCount;i++){
+                MapNode *head=temp[i];
+                delete head;
+            }
+
+            temp.clear();
+        }
+
     public:
         OurMap();
         ~OurMap();
@@ -102,6 +141,14 @@ void OurMap<T>::insertKeyVal(string k,T val){
 
     totalSize++;
 
+    /// Find load factor
+    double loadFactor=(double)totalSize/numBuckets;
+
+    if(loadFactor>0.7){
+        rehash();
+    }
+
+
     return;
 
 }
@@ -159,4 +206,5 @@ T OurMap<T>::removeVal(string k){
     }
     return 0;
 }
-
+int main(){
+}
