@@ -1,6 +1,8 @@
 Given an integer N, find and return the count of minimum numbers, sum of whose squares is equal to N.
 That is, if N is 4, then we can represent it as : {1^2 + 1^2 + 1^2 + 1^2} and {2^2}. Output will be 1, as 1 is the minimum count of numbers required.
 
+https://www.geeksforgeeks.org/closest-perfect-square-and-its-distance/    
+
 #include<bits/stdc++.h>
 using namespace std;
 bool isPerfectSquare(int n){
